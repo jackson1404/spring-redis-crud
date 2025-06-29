@@ -61,6 +61,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Caching(
+            put = @CachePut(value = "product", key = "#productId"),
+            evict = @CacheEvict(value = "products", allEntries = true)
+    )
     public ProductEntity updateProduct(Long productId, ProductRequestDto productRequestDto) {
 
         ProductEntity productEntity = productRepository.findById(productId)
