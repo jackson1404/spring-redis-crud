@@ -12,4 +12,6 @@ public interface ProductService {
     ProductEntity createProduct(ProductRequestDto productRequestDto);
 
     ProductEntity getProductById(Long productId);
+
+    ProductEntity updateProduct(Long productId, ProductRequestDto productRequestDto);
 }

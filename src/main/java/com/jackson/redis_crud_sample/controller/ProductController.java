@@ -46,5 +46,17 @@ public class ProductController {
         }
     }
 
+    @PutMapping("/updateProduct")
+    public ResponseEntity<ProductEntity> updateProduct(@RequestParam Long productId, @RequestBody ProductRequestDto productRequestDto){
+
+        try {
+            ProductEntity product = productService.updateProduct(productId, productRequestDto);
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } catch (RuntimeException e){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+        }
+    }
+
 
 }
