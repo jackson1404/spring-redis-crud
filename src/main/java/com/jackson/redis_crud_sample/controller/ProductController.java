@@ -27,15 +27,23 @@ public class ProductController {
     @GetMapping("/getAllProducts")
     public ResponseEntity<List<ProductEntity>> getAllProducts() {
         List<ProductEntity> products = productService.getAllProduct();
-        return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(30, TimeUnit.MINUTES))
-                .body(products);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @PostMapping("/addProduct")
     public ResponseEntity<ProductEntity> addProduct(@RequestBody ProductRequestDto productRequestDto){
         ProductEntity product =  productService.createProduct(productRequestDto);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/getProductById")
+    public ResponseEntity<ProductEntity> getProductById(@RequestParam Long productId){
+        try {
+            ProductEntity product = productService.getProductById(productId);
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
 

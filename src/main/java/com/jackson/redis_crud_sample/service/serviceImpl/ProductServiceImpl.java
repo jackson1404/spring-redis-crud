@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Cacheable(value = "products")
     public List<ProductEntity> getAllProduct() {
-        logger.info("Hit the db");
+        logger.info("Hit the db server for get all products");
         return productRepository.findAll();
     }
 
@@ -45,7 +46,17 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setProductPrice(productRequestDto.getProductPrice());
         productEntity.setProductQuantity(productRequestDto.getProductQuantity());
 
-        logger.info("call save");
+        logger.info("hit the db service for create");
         return productRepository.save(productEntity);
+    }
+
+    @Override
+    @Cacheable(value = "product", key = "#productId")
+    public ProductEntity getProductById(Long productId) {
+
+        System.out.println("hit the db service for get product by id " + productId);
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
     }
 }

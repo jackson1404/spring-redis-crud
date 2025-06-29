@@ -10,4 +10,6 @@ public interface ProductService {
     List<ProductEntity> getAllProduct();
 
     ProductEntity createProduct(ProductRequestDto productRequestDto);
+
+    ProductEntity getProductById(Long productId);
 }
