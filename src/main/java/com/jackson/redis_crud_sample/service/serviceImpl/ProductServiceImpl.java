@@ -70,8 +70,8 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setProductPrice(productRequestDto.getProductPrice());
         productEntity.setProductDescription(productRequestDto.getProductDescription());
         productEntity.setProductQuantity(productRequestDto.getProductQuantity());
-
-
+        logger.info("hit the db from service for update product");
+        productRepository.save(productEntity);
         return productEntity;
     }
 }
